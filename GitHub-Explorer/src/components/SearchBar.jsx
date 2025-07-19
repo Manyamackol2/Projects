@@ -2,7 +2,6 @@ const SearchBar = ({ username, setUsername, onSearch, onReset, activeTab, setAct
   return (
     <div className="w-full flex flex-col sm:items-end items-stretch gap-2 bg-white p-0 rounded-lg">
       
-      {/* Row 1: Search Input and Buttons */}
       <div className="w-full flex flex-col sm:flex-row sm:justify-end sm:items-center gap-4">
          <input
           type="text"
@@ -30,7 +29,6 @@ const SearchBar = ({ username, setUsername, onSearch, onReset, activeTab, setAct
         </button>
       </div>
 
-      {/* Row 2: Trending Repos Button */}
       <div className="flex justify-end w-full">
         <button
           className={`animate-glow px-4 py-3.5 rounded-full font-semibold text-xl transition-all duration-200 shadow-md ${

@@ -4,12 +4,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: '#6366F1',  // Indigo
-        accent: '#F472B6',   // Pink
-        soft: '#F3F4F6',     // Light background
-        muted: '#9CA3AF',    // Secondary text
-        card: '#FFFFFF',     // Card background
-        border: '#E5E7EB',   // Border
+        primary: '#6366F1',  
+        accent: '#F472B6',   
+        soft: '#F3F4F6',     
+        muted: '#9CA3AF',    
+        card: '#FFFFFF',     
+        border: '#E5E7EB',   
       },
       fontFamily: {
         sans: ['Inter', 'sans-serif'],

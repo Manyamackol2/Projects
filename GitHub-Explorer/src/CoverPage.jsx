@@ -6,7 +6,6 @@ const CoverPage = ({ onStart }) => {
    <section className="w-full h-screen bg-[#f3f5fc] flex items-center justify-center px-16">
   <div className="flex w-full max-w-7xl items-center justify-between gap-12">
     
-    {/* Left side: Text */}
     <div className="flex-1 animate-fadeSlideUp">
       <h1 className="text-6xl font-bold text-purple-600 mb-4">
         <em className="not-italic font-semibold text-purple-700">
@@ -24,7 +23,6 @@ const CoverPage = ({ onStart }) => {
       </button>
     </div>
 
-    {/* Right side: Image */}
     <div className="flex-1 flex justify-center animate-bounceSlow fadeSlideLoop" style={{ animationDelay: '0.3s' }}>
       <img
         src={WelcomeCats}
