@@ -66,7 +66,20 @@ const Sidebar = ({ userData, activeTab, setActiveTab }) => {
           >
             📌 Bookmarks
           </li>
-        </ul>
+      <li
+  className={`cursor-pointer text-center mt-2 py-2 px-3 rounded font-semibold ${
+    activeTab === "trending"
+      ? "bg-indigo-600 text-white"
+      : "bg-indigo-100 text-indigo-700"
+  }`}
+  onClick={() => {
+    console.log("Trending tab clicked");
+    setActiveTab("trending");
+  }}
+>
+  🔥 Trending
+</li>
+  </ul>
       </div>
     </div>
   );

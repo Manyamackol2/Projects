@@ -18,7 +18,7 @@ const RepoList = ({
     <div className="mt-6 bg-white rounded-xl shadow-md p-5 transition-all">
       <button
         onClick={() => setShowRepos(!showRepos)}
-        className="bg-purple-600 text-white px-5 py-2 rounded-lg shadow hover:bg-purple-700 transition"
+        className="bg-purple-600 text-white px-5 py-2 hover:bg-purple-700 rounded-full font-semibold text-lg transition-all duration-200 shadow-md"
       >
         {showRepos ? "Hide Repositories" : "📂 View Repositories"}
       </button>

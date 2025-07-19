@@ -20,14 +20,30 @@ module.exports = {
       borderRadius: {
         xl: '1rem',
       },
-       keyframes: {
+      keyframes: {
         fadeUp: {
-          '0%': { opacity: 0, transform: 'translateY(20px)' },
+          '0%': { opacity: 0, transform: 'translateY(30px)' },
           '100%': { opacity: 1, transform: 'translateY(0)' },
+        },
+        glow: {
+          '0%, 100%': { boxShadow: '0 0 0px #a855f7' },
+          '50%': { boxShadow: '0 0 15px #a855f7' },
+        },
+        bounceSlow: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        fadeSlideLoop: {
+          '0%': { opacity: 0.8, transform: 'translateY(0)' },
+          '50%': { opacity: 1, transform: 'translateY(-5px)' },
+          '100%': { opacity: 0.8, transform: 'translateY(0)' },
         },
       },
       animation: {
         fadeUp: 'fadeUp 0.8s ease-out both',
+        glow: 'glow 2s infinite ease-in-out',
+        bounceSlow: 'bounceSlow 3s infinite',
+        fadeSlideLoop: 'fadeSlideLoop 4s infinite ease-in-out',
       },
     },
   },

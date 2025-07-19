@@ -17,6 +17,9 @@ import ProfileCard from './components/ProfileCard';
 import StatsCards from './components/StatsCards';
 import RepoList from './components/RepoList';
 import EmptyState from './components/EmptyState';
+import TrendingRepoList from "./components/TrendingRepoList";
+import CoverPage from './CoverPage';
+
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -30,6 +33,8 @@ function App() {
   const [contribData, setContribData] = useState([]);
   const [showBookmarked, setShowBookmarked] = useState(false);
   const [activeTab, setActiveTab] = useState('overview'); 
+  const [trendingRepos, setTrendingRepos] = useState([]);
+  const [showCover, setShowCover] = useState(true);
   const [bookmarkedRepos, setBookmarkedRepos] = useState(() => {
     const saved = localStorage.getItem("bookmarkedRepos");
     return saved ? JSON.parse(saved) : [];
@@ -53,18 +58,41 @@ function App() {
       console.error('Error fetching data', err);
     }
   };
-  const resetSearch = () => {
-  setUsername('');
-  setUserData(null);
-  setRepos([]);
+const fetchTrendingRepos = async () => {
+  try {
+    const lastWeek = new Date();
+    lastWeek.setDate(lastWeek.getDate() - 7);
+    const formattedDate = lastWeek.toISOString().split("T")[0];
+
+    const response = await fetch(
+      `https://api.github.com/search/repositories?q=created:>${formattedDate}&sort=stars&order=desc&per_page=10`
+    );
+    const data = await response.json();
+    setTrendingRepos(data.items);
+  } catch (error) {
+    console.error("Failed to fetch trending repos", error);
+  }
 };
+
+
+
 const handleReset = () => {
   setUsername("");
   setUserData(null);
   setRepos([]);
   setShowRepos(false);
-  setShowBookmarked(false); 
+  setShowBookmarked(false);
+  setActiveTab(null); 
+  setSelectedRepo1(null);
+  setSelectedRepo2(null);
 };
+
+useEffect(() => {
+  if (activeTab === 'trending' && trendingRepos.length === 0) {
+    fetchTrendingRepos();
+  }
+}, [activeTab, trendingRepos.length]);
+
 
   useEffect(() => {
     const fetchContributors = async () => {
@@ -110,9 +138,14 @@ const handleReset = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-[#f7faff] to-[#e6edff] flex">
+     {showCover ? (
+  <CoverPage onStart={() => setShowCover(false)} />
+) : (
+   <>
       {userData && (
-        <Sidebar userData={userData} activeTab={activeTab} setActiveTab={setActiveTab} />
+        <Sidebar userData={userData}  setActiveTab={setActiveTab} />
       )}
+      
       <main className="flex-1 p-6">
         <div className="flex flex-col sm:flex-row flex-wrap gap-3 items-center bg-white shadow-md p-5 rounded-lg">
           <SearchBar
@@ -120,24 +153,32 @@ const handleReset = () => {
             setUsername={setUsername}
             onSearch={fetchData}
             onReset={handleReset}
+            setActiveTab={setActiveTab}
           />
+           
           {!userData && (
   <div className="flex justify-center items-center w-full">
     <EmptyState />
   </div>
 )}
         </div>
+        <div className="flex justify-center mt-4 space-x-4">
+</div>
         <div className="mt-6 space-y-6">
           <ProfileCard userData={userData} />
           <StatsCards repos={repos} />
-
           {bookmarkedRepos.length > 0 && (
             <div className="text-center">
               <button
-                onClick={() => setShowBookmarked(!showBookmarked)}
-                className="bg-yellow-400 text-white px-4 py-2 rounded shadow hover:bg-yellow-500"
-              >
-                {showBookmarked ? "⬅️ Back to All Repos" : "📌 View Bookmarked Repos"}
+              className={`px-6 py-3 rounded-full font-semibold text-lg transition-all duration-200 shadow-md ${
+    showBookmarked
+      ? 'bg-purple-500 text-white'
+      : 'bg-white border border-black text-indigo-600 hover:bg-purple-500 hover:text-white hover:border-white hover:shadow-lg hover:scale-105'
+  }`}
+  onClick={() => setShowBookmarked(!showBookmarked)}
+      >
+       {showBookmarked ? "⬅️ Back to All Repos" : "📌 View Bookmarked Repos"}
+
               </button>
             </div>
           )}
@@ -178,7 +219,7 @@ const handleReset = () => {
               )}
             </div>
           )}
-{activeTab === 'overview' && (
+
           <RepoList
             repos={repos}
             showRepos={showRepos}
@@ -189,7 +230,11 @@ const handleReset = () => {
             updateNote={updateNote}
             showBookmarked={showBookmarked}
           />
-          )}
+          
+          {activeTab === 'trending' && (
+  <TrendingRepoList repos={trendingRepos} />
+)}
+
           {repos.length >= 2 && (
             <div className="mt-10">
               <h2 className="text-xl font-bold mb-4 text-gray-800">🆚 Compare Repositories</h2>
@@ -286,10 +331,12 @@ const handleReset = () => {
               </div>
             </div>
           )}
+    
         </div>
-      </main>
-    </div>
-  );
+        </main>
+        </>
+    )}
+     </div>
+);
 }
-
 export default App;
