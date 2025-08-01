@@ -5,8 +5,6 @@
 Welcome to **RepoScape**, a beautifully designed React app to explore the world of GitHub like never before!  
 Search users, discover trending repositories, compare repos, track contributors, and even bookmark your favorites — all in one elegant interface.
 
-![cover](./src/assets/undraw_welcome-cats_tw36.svg)
-
 ---
 
 ## ✨ Features
@@ -49,6 +47,8 @@ src/
 ├── utils/ # API logic & helpers
 └── App.js # Root component
 
+## Deployment
+https://reposcape.vercel.app/
 
 # 2. 🌿 Habit Tracker PWA
 
@@ -88,3 +88,5 @@ src/
 ├── main.jsx
 ├── ...
 
+## Deployment
+https://track-habits-pwa.vercel.app/
